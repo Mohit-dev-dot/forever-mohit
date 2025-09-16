@@ -1,19 +1,16 @@
+import mongoose from 'mongoose';
+
 const connectDB = async () => {
   try {
-    mongoose.connection.on('connected', () => {
-      console.log("MONGO_URI is:", process.env.MONGO_URI);
-    });
-console.log("DEBUG MONGO_URI value:", JSON.stringify(process.env.MONGO_URI));
+    const uri = 'mongodb://127.0.0.1:27017/forever';  // TEMP: hardcoded
+    console.log('DEBUG using URI:', uri);
 
-
-    await mongoose.connect(process.env.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-
-    console.log("✅ MongoDB connected successfully");
-  } catch (error) {
-    console.error("❌ MongoDB connection failed:", error.message);
+    await mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    console.log('✅ MongoDB connected successfully');
+  } catch (err) {
+    console.error('❌ MongoDB connection failed:', err.message);
     process.exit(1);
   }
 };
+
+export default connectDB;
